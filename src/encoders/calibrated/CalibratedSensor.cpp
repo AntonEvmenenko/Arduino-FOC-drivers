@@ -54,7 +54,7 @@ float CalibratedSensor::getSensorAngle(){
 
 void CalibratedSensor::calibrate(BLDCMotor& motor){
     
-    Serial.println("Starting Sensor Calibration.");
+    SIMPLEFOC_DEBUG("Starting Sensor Calibration.");
 
     int _NPP = motor.pole_pairs;                                    // number of pole pairs which is user input
     const int n_ticks = 128*_NPP;                                   // number of positions to be sampled per mechanical rotation.  Multiple of NPP for filtering reasons (see later)
@@ -94,12 +94,12 @@ void CalibratedSensor::calibrate(BLDCMotor& motor){
     // determine the direction the sensor moved
     int directionSensor;
     if (mid_angle < end_angle) {
-      Serial.println("MOT: sensor_direction==CCW");
+      SIMPLEFOC_DEBUG("MOT: sensor_direction==CCW");
       directionSensor = -1;
       motor.sensor_direction = Direction::CCW;
 
     } else{
-      Serial.println("MOT: sensor_direction==CW");
+      SIMPLEFOC_DEBUG("MOT: sensor_direction==CW");
       directionSensor = 1;
       motor.sensor_direction = Direction::CW;
 
@@ -122,7 +122,7 @@ void CalibratedSensor::calibrate(BLDCMotor& motor){
 	/* 
 	forwards rotation
 	*/
-	Serial.println("Rotating forwards");
+	SIMPLEFOC_DEBUG("Rotating forwards");
 	int k = 0;
 	for(int i = 0; i<n_ticks; i++)
 	{                                                 
@@ -163,7 +163,7 @@ void CalibratedSensor::calibrate(BLDCMotor& motor){
 	/* 
 	backwards rotation
 	*/
-	Serial.println("Rotating backwards");
+	SIMPLEFOC_DEBUG("Rotating backwards");
 	for(int i = 0; i<n_ticks; i++)
 	{                                                 
 		for(int j = 0; j<n2_ticks; j++)
@@ -200,8 +200,7 @@ void CalibratedSensor::calibrate(BLDCMotor& motor){
 
 	// calculating the average zero electrica angle from the forward calibration.
 	motor.zero_electric_angle  = avg_elec_angle/_NPP;
-	Serial.print( "Average Zero Electrical Angle: ");
-	Serial.println( motor.zero_electric_angle); 
+	SIMPLEFOC_DEBUG( "Average Zero Electrical Angle: ", motor.zero_electric_angle);
 	
 	// Perform filtering to linearize position sensor eccentricity
 	// FIR n-sample average, where n = number of samples in one electrical cycle
@@ -250,7 +249,7 @@ void CalibratedSensor::calibrate(BLDCMotor& motor){
   //  delete raw_f;
     delete error_f;
 
-    Serial.println("Sensor Calibration Done.");
+    SIMPLEFOC_DEBUG("Sensor Calibration Done.");
 
 }
 

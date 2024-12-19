@@ -127,7 +127,7 @@ void TLE5012B::init() {
 
     if (HAL_SPI_Init(&_spi) != HAL_OK) {
         // setup error
-        Serial.println("TLE5012B setup error");
+        SIMPLEFOC_DEBUG("TLE5012B setup error");
     }
 };
 
