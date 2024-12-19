@@ -3,7 +3,7 @@
 
 #if defined(_STM32_DEF_)
 
-
+#include "./communication/SimpleFOCDebug.h"
 #include "utility/spi_com.h"
 extern "C" uint32_t spi_getClkFreqInst(SPI_TypeDef *spi_inst);
 

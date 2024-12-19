@@ -1,5 +1,6 @@
 #include "CalibratedSensor.h"
 
+#include "./communication/SimpleFOCDebug.h"
 
 // CalibratedSensor()
 // sensor              - instance of original sensor object
